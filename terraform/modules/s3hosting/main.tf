@@ -22,9 +22,9 @@ resource "aws_s3_bucket" "www" {
 #create s3 bucket policy
 resource "aws_s3_bucket_policy" "www" {
   bucket = aws_s3_bucket.www.bucket
-  policy = templatefile("templates/policy.json",{
+  policy = templatefile("${path.module}/templates/policy.json",{
     bucket_arn = aws_s3_bucket.www.arn,
-    cloudfront_arn = aws_cloudfront_origin_access_identity.this.iam_arn
+    cloudfront_arn = aws_cloudfront_origin_access_identity.www.iam_arn
   } )
 }
 #create s3 bucket to host website logs
@@ -46,7 +46,7 @@ resource "aws_s3_bucket" "redirect" {
 #create s3 bucket policy
 resource "aws_s3_bucket_policy" "redirect" {
   bucket = aws_s3_bucket.redirect.bucket
-  policy = templatefile("templates/policy.json",{
+  policy = templatefile("${path.module}/templates/policy.json",{
     bucket_arn = aws_s3_bucket.redirect.arn,
     cloudfront_arn = aws_cloudfront_origin_access_identity.redirect.iam_arn
   } )
