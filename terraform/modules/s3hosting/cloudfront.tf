@@ -71,6 +71,7 @@ resource "aws_cloudfront_distribution" "www" {
   }
 
   tags = var.tags
+  depends_on = [aws_s3_bucket.www]
 }
 
 # Cloudfront S3 for redirect to www.
@@ -116,4 +117,5 @@ resource "aws_cloudfront_distribution" "redirect" {
     minimum_protocol_version = "TLSv1.1_2016"
   }
   tags = var.tags
+  depends_on = [aws_s3_bucket.redirect]
 }
