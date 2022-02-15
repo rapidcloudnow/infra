@@ -24,9 +24,9 @@ resource "aws_s3_bucket" "this" {
 
 #create redirect to redirect http to https
 resource "aws_s3_bucket" "redirect-http-https" {
-  bucket = join(".",["www",var.subdomain_name,var.domain_name])
+  bucket = join(".",["www",var.domain_name])
   website {
-    redirect_all_requests_to = join("",["https://",var.subdomain_name,".",var.domain_name])
+    redirect_all_requests_to = join("",["https://",var.domain_name])
   }
   tags = var.tags
 }
