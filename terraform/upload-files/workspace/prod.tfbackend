@@ -1,0 +1,5 @@
+bucket = "rcn-terraform-state"
+key = "infra/upload/terraform.tfstate"
+workspace_key_prefix = "env"
+region = "us-east-1"
+encrypt = true
