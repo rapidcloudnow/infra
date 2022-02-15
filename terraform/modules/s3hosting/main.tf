@@ -26,6 +26,7 @@ resource "aws_s3_bucket_policy" "www" {
     bucket_arn = aws_s3_bucket.www.arn,
     cloudfront_arn = aws_cloudfront_origin_access_identity.www.iam_arn
   } )
+  depends_on = [aws_s3_bucket.www]
 }
 #create s3 bucket to host website logs
 resource "aws_s3_bucket" "this" {
@@ -50,5 +51,6 @@ resource "aws_s3_bucket_policy" "redirect" {
     bucket_arn = aws_s3_bucket.redirect.arn,
     cloudfront_arn = aws_cloudfront_origin_access_identity.redirect.iam_arn
   } )
+  depends_on = [aws_s3_bucket.redirect]
 }
 
