@@ -1,0 +1,14 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "CloudFrontReadGetObject",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "${cloudfront_arn}"
+      },
+      "Action": "s3:GetObject",
+      "Resource": "${bucket_arn}/*"
+    }
+  ]
+}
