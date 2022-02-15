@@ -5,7 +5,7 @@ variable "tags" {
 variable "region" {
   description = "aws region to deploy"
   type = string
-  default = "us-east-2"
+  default = "us-east-1"
 }
 variable "profile" {
   description = "iam user profile to use"
