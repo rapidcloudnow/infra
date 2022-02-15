@@ -1,7 +1,7 @@
 
 #create s3 bucket to host our site
 resource "aws_s3_bucket" "main" {
-  bucket = join(".",[var.subdomain_name,var.domain_name])
+  bucket = var.domain_name
   website {
     index_document = var.index_document_name
   }
