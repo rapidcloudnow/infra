@@ -18,3 +18,8 @@ variable "s3_bucket_name" {
   default = null
   type = string
 }
+variable "profile" {
+  description = "iam user profile to use"
+  type = string
+  default = "rcn"
+}
