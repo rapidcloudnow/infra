@@ -5,10 +5,12 @@ variable "tags" {
 variable "region" {
   description = "aws region to deploy"
   type = string
+  default = "us-east-2"
 }
 variable "profile" {
   description = "iam user profile to use"
   type = string
+  default = "rcn"
 }
 variable "domain_name" {
   description = "domain name of this site"
