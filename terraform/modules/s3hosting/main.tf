@@ -20,14 +20,14 @@ resource "aws_s3_bucket" "www" {
   tags = var.tags
 }
 #create s3 bucket policy
-#resource "aws_s3_bucket_policy" "www" {
-#  bucket = aws_s3_bucket.www.bucket
-#  policy = templatefile("${path.module}/templates/policy.json",{
-#    bucket_arn = aws_s3_bucket.www.arn,
-#    cloudfront_arn = aws_cloudfront_origin_access_identity.www.iam_arn
-#  } )
-#  depends_on = [aws_s3_bucket.www]
-#}
+resource "aws_s3_bucket_policy" "www" {
+  bucket = aws_s3_bucket.www.bucket
+  policy = templatefile("${path.module}/templates/policy.json",{
+    bucket_arn = aws_s3_bucket.www.arn,
+    cloudfront_arn = aws_cloudfront_origin_access_identity.www.iam_arn
+  } )
+  depends_on = [aws_s3_bucket.www]
+}
 #create s3 bucket to host website logs
 resource "aws_s3_bucket" "this" {
   bucket = join("-",[var.domain_name,"logs"])
@@ -45,12 +45,12 @@ resource "aws_s3_bucket" "redirect" {
 }
 
 #create s3 bucket policy
-#resource "aws_s3_bucket_policy" "redirect" {
-#  bucket = aws_s3_bucket.redirect.bucket
-#  policy = templatefile("${path.module}/templates/policy.json",{
-#    bucket_arn = aws_s3_bucket.redirect.arn,
-#    cloudfront_arn = aws_cloudfront_origin_access_identity.redirect.iam_arn
-#  } )
-#  depends_on = [aws_s3_bucket.redirect]
-#}
+resource "aws_s3_bucket_policy" "redirect" {
+  bucket = aws_s3_bucket.redirect.bucket
+  policy = templatefile("${path.module}/templates/policy.json",{
+    bucket_arn = aws_s3_bucket.redirect.arn,
+    cloudfront_arn = aws_cloudfront_origin_access_identity.redirect.iam_arn
+  } )
+  depends_on = [aws_s3_bucket.redirect]
+}
 

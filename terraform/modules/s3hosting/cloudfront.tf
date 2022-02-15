@@ -46,12 +46,12 @@ resource "aws_cloudfront_distribution" "www" {
     cached_methods = ["GET", "HEAD"]
     target_origin_id = local.www_origin_id
     cache_policy_id = data.aws_cloudfront_cache_policy.managed_cache.id
-    forwarded_values {
-      query_string = false
-      cookies {
-        forward = "none"
-      }
-    }
+#    forwarded_values {
+#      query_string = false
+#      cookies {
+#        forward = "none"
+#      }
+#    }
     viewer_protocol_policy = "redirect-to-https"
     min_ttl = 31536000
     default_ttl = 31536000
