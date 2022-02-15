@@ -12,4 +12,5 @@ data "aws_cloudfront_cache_policy" "managed_cache" {
 }
 data "aws_acm_certificate" "this" {
   domain = var.domain_name
+  types       = ["AMAZON_ISSUED"]
 }

@@ -22,3 +22,8 @@ variable "tags" {
   description = "tags to associate with this instance"
   type = map(string)
 }
+variable "region" {
+  description = "name of the aws region"
+  default = "us-east-1"
+  type = string
+}
