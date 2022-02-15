@@ -5,6 +5,8 @@ resource "aws_s3_bucket" "main" {
   website {
     index_document = var.index_document_name
   }
+  acl = "public-read"
+  policy = data.aws_iam_policy_document.bucket_policy.json
   logging {
     target_bucket = aws_s3_bucket.this.id
   }

@@ -1,8 +1,8 @@
 #create route53 record for this site
 resource "aws_route53_record" "this" {
-  name = var.subdomain_name
-  type = "A"
   zone_id = data.aws_route53_zone.zone.zone_id
+  name = var.domain_name
+  type = "A"
   alias {
     evaluate_target_health = false
     name                   = aws_s3_bucket.main.bucket_domain_name
