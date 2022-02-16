@@ -5,6 +5,7 @@ resource "aws_s3_bucket" "this" {
   versioning {
     enabled = true
   }
+  force_destroy = true
   tags = var.tags
 }
 #create s3 bucket policy
@@ -21,5 +22,6 @@ resource "aws_s3_bucket" "log" {
   bucket = join("-",[var.domain_name,"logs"])
   acl = "log-delivery-write"
   tags = var.tags
+  force_destroy = true
 }
 
