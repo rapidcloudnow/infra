@@ -13,7 +13,7 @@ resource "aws_s3_bucket" "www" {
   }
   cors_rule {
     allowed_headers = ["Authorization", "Content-Length"]
-    allowed_methods = ["GET", "POST"]
+    allowed_methods = ["GET"]
     allowed_origins = ["https://www.${var.domain_name}"]
     max_age_seconds = 3000
   }
@@ -39,11 +39,10 @@ resource "aws_s3_bucket" "this" {
 resource "aws_s3_bucket" "redirect" {
   bucket = var.domain_name
   website {
-    redirect_all_requests_to = join("",["https://",var.domain_name])
+    redirect_all_requests_to = "https://www.${var.domain_name}"
   }
   tags = var.tags
 }
-
 #create s3 bucket policy
 resource "aws_s3_bucket_policy" "redirect" {
   bucket = aws_s3_bucket.redirect.bucket
@@ -53,4 +52,5 @@ resource "aws_s3_bucket_policy" "redirect" {
   } )
   depends_on = [aws_s3_bucket.redirect]
 }
+
 
