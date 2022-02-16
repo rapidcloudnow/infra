@@ -21,7 +21,7 @@ resource "aws_cloudfront_distribution" "www" {
 #  price_class         = "PriceClass_100"
 
   origin {
-    domain_name = aws_s3_bucket.www.website_domain
+    domain_name = aws_s3_bucket.www.website_endpoint
     origin_id = local.www_origin_id
     s3_origin_config {
       origin_access_identity = aws_cloudfront_origin_access_identity.www.cloudfront_access_identity_path
@@ -68,7 +68,7 @@ resource "aws_cloudfront_distribution" "redirect" {
   enabled = true
   is_ipv6_enabled = true
   origin {
-    domain_name = aws_s3_bucket.redirect.website_domain
+    domain_name = aws_s3_bucket.redirect.website_endpoint
     origin_id = local.redict_orgin_id
     s3_origin_config {
       origin_access_identity = aws_cloudfront_origin_access_identity.redirect.cloudfront_access_identity_path
