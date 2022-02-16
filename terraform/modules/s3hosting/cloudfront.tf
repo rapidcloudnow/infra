@@ -1,18 +1,14 @@
 #Cloudfront for this s3 site
 locals {
-  www_origin_id = "www.${var.domain_name}"
-  redict_orgin_id  = "redict.${var.domain_name}"
+  origin_id = "${var.subdomain_name}.${var.domain_name}"
 }
 # create origin access identity
-resource "aws_cloudfront_origin_access_identity" "www" {
-  comment = "origin access for rcn www"
-}
-# create origin access identity
-resource "aws_cloudfront_origin_access_identity" "redirect" {
-  comment = "origin access for rcn redirect"
+resource "aws_cloudfront_origin_access_identity" "this" {
+  comment = "origin access"
 }
 
-resource "aws_cloudfront_distribution" "www" {
+
+resource "aws_cloudfront_distribution" "this" {
   enabled = true
   is_ipv6_enabled = true
   wait_for_deployment = false
@@ -21,10 +17,10 @@ resource "aws_cloudfront_distribution" "www" {
 #  price_class         = "PriceClass_100"
 
   origin {
-    domain_name = aws_s3_bucket.www.website_endpoint
-    origin_id = local.www_origin_id
+    domain_name = aws_s3_bucket.this.bucket_domain_name
+    origin_id = local.origin_id
     s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.www.cloudfront_access_identity_path
+      origin_access_identity = aws_cloudfront_origin_access_identity.this.cloudfront_access_identity_path
     }
   }
 
@@ -39,7 +35,7 @@ resource "aws_cloudfront_distribution" "www" {
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["GET", "HEAD", "OPTIONS"]
-    target_origin_id = local.www_origin_id
+    target_origin_id = local.origin_id
     cache_policy_id = data.aws_cloudfront_cache_policy.managed_cache.id
 
     viewer_protocol_policy = "redirect-to-https"
@@ -60,41 +56,7 @@ resource "aws_cloudfront_distribution" "www" {
     minimum_protocol_version = "TLSv1.2_2021"
   }
   tags = var.tags
-  depends_on = [aws_s3_bucket.www]
+  depends_on = [aws_s3_bucket.this]
 }
 
-# Cloudfront S3 for redirect to www.
-resource "aws_cloudfront_distribution" "redirect" {
-  enabled = true
-  is_ipv6_enabled = true
-  origin {
-    domain_name = aws_s3_bucket.redirect.website_endpoint
-    origin_id = local.redict_orgin_id
-    s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.redirect.cloudfront_access_identity_path
-    }
-  }
-  aliases = [var.domain_name]
-  default_cache_behavior {
-    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-    cached_methods   = ["GET", "HEAD", "OPTIONS"]
-    target_origin_id = local.redict_orgin_id
-    cache_policy_id = data.aws_cloudfront_cache_policy.managed_cache.id
-    viewer_protocol_policy = "allow-all"
-    min_ttl = 0
-    default_ttl = 86400
-    max_ttl = 31536000
-  }
-  restrictions {
-    geo_restriction {
-      restriction_type = "none"
-    }
-  }
-  viewer_certificate {
-    acm_certificate_arn = data.aws_acm_certificate.this.arn
-    ssl_support_method = "sni-only"
-    minimum_protocol_version = "TLSv1.2_2021"
-  }
-  tags = var.tags
-  depends_on = [aws_s3_bucket.redirect]
 }
