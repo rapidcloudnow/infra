@@ -9,7 +9,7 @@ resource "aws_s3_bucket" "this" {
   tags = var.tags
 }
 #create s3 bucket policy
-resource "aws_s3_bucket_policy" "www" {
+resource "aws_s3_bucket_policy" "this" {
   bucket = aws_s3_bucket.this.bucket
   policy = templatefile("${path.module}/templates/policy.json",{
     bucket_arn = aws_s3_bucket.this.arn,

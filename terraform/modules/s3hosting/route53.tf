@@ -1,7 +1,7 @@
 #create route53 record for this site
 resource "aws_route53_record" "this" {
   zone_id = data.aws_route53_zone.zone.zone_id
-  name = join(".",["www",var.domain_name])
+  name = "www"
   type = "A"
   alias {
     evaluate_target_health = false
