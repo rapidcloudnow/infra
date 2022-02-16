@@ -69,7 +69,7 @@ resource "aws_cloudfront_distribution" "redirect" {
   is_ipv6_enabled = true
   origin {
     domain_name = aws_s3_bucket.redirect.bucket_domain_name
-    origin_id = local.www_origin_id
+    origin_id = local.redict_orgin_id
     s3_origin_config {
       origin_access_identity = aws_cloudfront_origin_access_identity.redirect.cloudfront_access_identity_path
     }
