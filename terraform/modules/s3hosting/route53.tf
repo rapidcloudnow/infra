@@ -12,7 +12,7 @@ resource "aws_route53_record" "www" {
 #create route53 record for root domain
 resource "aws_route53_record" "redirect" {
   zone_id = data.aws_route53_zone.zone.zone_id
-  name = var.domain_name
+  name = ""
   type = "A"
   alias {
     evaluate_target_health = false
