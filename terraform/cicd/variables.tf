@@ -12,10 +12,6 @@ variable "profile" {
   type = string
   default = "rcn"
 }
-variable "codepeline_role_name" {
-  description = "name of the pipeline role"
-  type = string
-}
 variable "stack_name" {
   default = "rcn"
   description = "application stack name"
