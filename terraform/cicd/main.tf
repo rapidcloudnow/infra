@@ -46,3 +46,43 @@ resource "aws_codepipeline" "codepipeline" {
   }
   tags = var.tags
 }
+
+resource "aws_cloudwatch_event_rule" "s3" {
+  name        =  "${var.stack_name}-${var.app_short_name}-${terraform.workspace}-codepipeline-event-rule"
+  description = "Capture s3 activities"
+
+  event_pattern = <<EOF
+{
+  "source": [
+    "aws.s3"
+  ],
+  "detail-type": [
+    "AWS API Call via CloudTrail"
+  ],
+  "detail": {
+    "eventSource": [
+      "s3.amazonaws.com"
+    ],
+    "eventName": [
+      "CopyObject",
+      "CompleteMultipartUpload",
+      "PutObject"
+    ],
+    "requestParameters": {
+      "bucketName": [
+        "${var.codepipeline_source_bucket}"
+      ],
+      "key": [
+        "${var.app_artifacts}"
+      ]
+    }
+  }
+}
+EOF
+}
+
+resource "aws_cloudwatch_event_target" "codepipeline" {
+  rule      = aws_cloudwatch_event_rule.s3.name
+  target_id = "BuildCodePipeline"
+  arn       = aws_codepipeline.codepipeline.arn
+}
