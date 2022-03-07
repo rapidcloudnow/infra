@@ -35,7 +35,7 @@ resource "aws_codepipeline" "codepipeline" {
       category = "Deploy"
       name     = "Deploy"
       owner    = "AWS"
-      provider = "AWS"
+      provider = "S3"
       version  = "1"
       input_artifacts = ["source_output"]
       configuration = {
