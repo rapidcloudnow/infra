@@ -85,4 +85,5 @@ resource "aws_cloudwatch_event_target" "codepipeline" {
   rule      = aws_cloudwatch_event_rule.s3.name
   target_id = "BuildCodePipeline"
   arn       = aws_codepipeline.codepipeline.arn
+  role_arn = module.iam_assumable_role.iam_role_arn
 }
