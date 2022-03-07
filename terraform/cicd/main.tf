@@ -23,8 +23,9 @@ resource "aws_codepipeline" "codepipeline" {
       version  = "1"
       output_artifacts = ["source_output"]
       configuration = {
-        ObjectKey = var.app_artifacts
-        BucketName = var.codepipeline_source_bucket
+        S3ObjectKey = var.app_artifacts
+        S3Bucket = var.codepipeline_source_bucket
+        PollForSourceChanges = true
       }
     }
   }
