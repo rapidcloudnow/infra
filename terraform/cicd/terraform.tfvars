@@ -1,0 +1,1 @@
+app_artifacts = "myrcn.zip"
