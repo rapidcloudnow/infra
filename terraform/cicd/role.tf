@@ -4,6 +4,7 @@ module "iam_assumable_role" {
   trusted_role_services = ["codepipeline.amazonaws.com"]
   create_role = true
   role_name = local.role_name
+  role_requires_mfa = false
   custom_role_policy_arns = [
    aws_iam_policy.codepipeline_policy.arn
   ]
