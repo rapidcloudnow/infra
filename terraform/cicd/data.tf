@@ -165,6 +165,11 @@ data "aws_iam_policy_document" "codepipeline_service_role" {
       "appconfig:GetDeployment"
     ]
   }
+  statement {
+    effect = "Allow"
+    resources = ["*"]
+    actions = ["codepipeline:StartPipelineExecution"]
+  }
 }
 
 data "aws_kms_alias" "s3kmskey" {

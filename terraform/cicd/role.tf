@@ -1,7 +1,10 @@
 module "iam_assumable_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role"
   version = "~> 4"
-  trusted_role_services = ["codepipeline.amazonaws.com"]
+  trusted_role_services = [
+    "codepipeline.amazonaws.com",
+    "events.amazonaws.com"
+  ]
   create_role = true
   role_name = local.role_name
   role_requires_mfa = false
